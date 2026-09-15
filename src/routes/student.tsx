@@ -38,6 +38,7 @@ import {
 } from "@/components/portal/data";
 import { useComplaints } from "@/components/portal/complaintsStore";
 import { useAnnouncements } from "@/components/portal/announcements";
+import { useT } from "@/components/portal/i18n";
 import campusImage from "@/assets/campus.jpg";
 
 export const Route = createFileRoute("/student")({
@@ -70,6 +71,7 @@ function StudentPortal() {
   const [showAll, setShowAll] = useState(false);
   const { announcements } = useAnnouncements();
   const navigate = useNavigate();
+  const { t } = useT();
 
   const stats = useMemo(
     () => [
@@ -148,7 +150,7 @@ function StudentPortal() {
             <section className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-warm)]">
               <div className="grid items-stretch md:grid-cols-[1.05fr_1fr]">
                 <div className="p-7 md:p-9">
-                  <p className="text-sm font-semibold text-muted-foreground">Welcome back,</p>
+                  <p className="text-sm font-semibold text-muted-foreground">{t("Welcome back,")}</p>
                   <h1 className="font-display text-4xl font-extrabold tracking-tight md:text-5xl">
                     Rahul <span className="align-middle">👋</span>
                   </h1>
@@ -160,7 +162,7 @@ function StudentPortal() {
                     className="mt-6 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-warm)] transition-transform hover:-translate-y-0.5"
                   >
                     <Plus className="size-4" />
-                    Submit New Complaint
+                    {t("Submit New Complaint")}
                     <ArrowRight className="size-4" />
                   </button>
                 </div>
@@ -185,10 +187,10 @@ function StudentPortal() {
             <section className="rounded-3xl border border-border bg-card p-6 md:p-7">
               <div className="flex items-center gap-2">
                 <FolderOpen className="size-5 text-primary" />
-                <h2 className="font-display text-lg font-extrabold">Complaint Categories</h2>
+                <h2 className="font-display text-lg font-extrabold">{t("Complaint Categories")}</h2>
               </div>
               <p className="mt-1 text-sm text-muted-foreground">
-                Choose the category that best fits your issue.
+                {t("Choose the category that best fits your issue.")}
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {categories.map((c) => (
@@ -201,7 +203,7 @@ function StudentPortal() {
                       <c.icon className="size-5" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-bold">{c.name}</span>
+                      <span className="block truncate text-sm font-bold">{t(c.name)}</span>
                       <span className="block truncate text-xs text-muted-foreground">{c.hint}</span>
                     </span>
                     <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
@@ -233,10 +235,10 @@ function StudentPortal() {
                   <thead>
                     <tr className="text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       <th className="px-3 pb-2">ID</th>
-                      <th className="px-3 pb-2">Subject</th>
-                      <th className="px-3 pb-2">Category</th>
-                      <th className="px-3 pb-2">Date</th>
-                      <th className="px-3 pb-2">Status</th>
+                      <th className="px-3 pb-2">{t("Subject")}</th>
+                      <th className="px-3 pb-2">{t("Category")}</th>
+                      <th className="px-3 pb-2">{t("Date")}</th>
+                      <th className="px-3 pb-2">{t("Status")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -250,7 +252,7 @@ function StudentPortal() {
                           {c.id}
                         </td>
                         <td className="px-3 py-3 font-semibold">{c.subject}</td>
-                        <td className="px-3 py-3 text-muted-foreground">{c.category}</td>
+                        <td className="px-3 py-3 text-muted-foreground">{t(c.category)}</td>
                         <td className="px-3 py-3 text-muted-foreground">{c.date}</td>
                         <td className="rounded-r-xl px-3 py-3">
                           <span
@@ -259,7 +261,7 @@ function StudentPortal() {
                               statusStyles[c.status],
                             )}
                           >
-                            {c.status}
+                            {t(c.status)}
                           </span>
                         </td>
                       </tr>
@@ -280,7 +282,7 @@ function StudentPortal() {
           {/* Right column */}
           <div className="space-y-5">
             <section className="rounded-3xl border border-border bg-card p-6">
-              <h2 className="font-display text-lg font-extrabold">Your Complaint Overview</h2>
+              <h2 className="font-display text-lg font-extrabold">{t("Your Complaint Overview")}</h2>
               <div className="mt-4 grid grid-cols-2 gap-3">
                 {stats.map((s) => (
                   <div key={s.label} className="rounded-2xl border border-border bg-muted/40 p-4">
@@ -288,7 +290,7 @@ function StudentPortal() {
                       <s.icon className="size-[18px]" />
                     </span>
                     <p className="mt-3 font-display text-2xl font-extrabold">{s.value}</p>
-                    <p className="text-xs text-muted-foreground">{s.label}</p>
+                    <p className="text-xs text-muted-foreground">{t(s.label)}</p>
                   </div>
                 ))}
               </div>
@@ -298,9 +300,9 @@ function StudentPortal() {
             <section className="rounded-3xl border border-border bg-card p-6">
               <div className="flex items-center gap-2">
                 <Megaphone className="size-5 text-primary" />
-                <h2 className="font-display text-lg font-extrabold">Announcements</h2>
+                <h2 className="font-display text-lg font-extrabold">{t("Announcements")}</h2>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">Updates posted by the administration.</p>
+              <p className="mt-1 text-xs text-muted-foreground">{t("Updates posted by the administration.")}</p>
               <ul className="mt-4 space-y-3">
                 {announcements.map((a) => (
                   <li key={a.id} className="rounded-2xl border border-border bg-muted/40 p-4">
@@ -311,7 +313,7 @@ function StudentPortal() {
                 ))}
                 {announcements.length === 0 && (
                   <li className="rounded-2xl border border-dashed border-border p-4 text-sm text-muted-foreground">
-                    No announcements right now.
+                    {t("No announcements right now.")}
                   </li>
                 )}
               </ul>
@@ -320,7 +322,7 @@ function StudentPortal() {
             <section className="rounded-3xl border border-border bg-card p-6">
               <div className="flex items-center gap-2">
                 <Zap className="size-5 text-primary" />
-                <h2 className="font-display text-lg font-extrabold">Quick Actions</h2>
+                <h2 className="font-display text-lg font-extrabold">{t("Quick Actions")}</h2>
               </div>
               <div className="mt-4 divide-y divide-border">
                 {[
@@ -352,7 +354,7 @@ function StudentPortal() {
                       <a.icon className="size-[18px]" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-sm font-bold">{a.title}</span>
+                      <span className="block text-sm font-bold">{t(a.title)}</span>
                       <span className="block truncate text-xs text-muted-foreground">{a.hint}</span>
                     </span>
                     <ChevronRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
@@ -395,8 +397,8 @@ function StudentPortal() {
       <Dialog open={faqOpen} onOpenChange={setFaqOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="font-display text-xl">Frequently asked questions</DialogTitle>
-            <DialogDescription>Quick answers about the complaint process.</DialogDescription>
+            <DialogTitle className="font-display text-xl">{t("Frequently asked questions")}</DialogTitle>
+            <DialogDescription>{t("Quick answers about the complaint process.")}</DialogDescription>
           </DialogHeader>
           <ul className="space-y-4">
             {faqs.map((f) => (

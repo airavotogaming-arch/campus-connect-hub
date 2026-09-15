@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
 const THEME_KEY = "campus-theme";
-const LANG_KEY = "campus-language";
 
 export type Theme = "light" | "dark";
 
@@ -34,30 +33,6 @@ export function useTheme() {
   return { theme, toggle };
 }
 
-export const languages = [
-  { code: "en", label: "English", native: "English" },
-  { code: "hi", label: "Hindi", native: "हिन्दी" },
-  { code: "ta", label: "Tamil", native: "தமிழ்" },
-  { code: "te", label: "Telugu", native: "తెలుగు" },
-  { code: "bn", label: "Bengali", native: "বাংলা" },
-  { code: "mr", label: "Marathi", native: "मराठी" },
-];
-
-export function useLanguage() {
-  const [lang, setLang] = useState("en");
-
-  useEffect(() => {
-    const stored = localStorage.getItem(LANG_KEY);
-    if (stored) setLang(stored);
-  }, []);
-
-  const change = useCallback((code: string) => {
-    setLang(code);
-    localStorage.setItem(LANG_KEY, code);
-    if (typeof document !== "undefined") document.documentElement.lang = code;
-  }, []);
-
-  const current = languages.find((l) => l.code === lang) ?? languages[0]!;
-
-  return { lang, current, change };
-}
+// Single source of truth for language lives in ./i18n (event-driven so every
+// component re-renders on change). Re-export to keep existing imports working.
+export { languages, useLanguage } from "./i18n";

@@ -10,6 +10,7 @@ import {
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useT } from "./i18n";
 
 const navItems = [
   { label: "Home", icon: Home },
@@ -29,6 +30,7 @@ export function PortalSidebar({
   active: string;
   onSelect: (label: string) => void;
 }) {
+  const { t } = useT();
   return (
     <aside className="sticky top-0 hidden h-screen w-[264px] shrink-0 flex-col justify-between border-r border-border bg-sidebar lg:flex">
       <div>
@@ -37,9 +39,7 @@ export function PortalSidebar({
             <GraduationCap className="size-5" />
           </span>
           <span className="font-display text-[15px] font-extrabold leading-tight text-sidebar-foreground">
-            Student
-            <br />
-            Complaint Portal
+            {t("Student Complaint Portal")}
           </span>
         </div>
 
@@ -58,7 +58,7 @@ export function PortalSidebar({
                 )}
               >
                 <item.icon className="size-[18px]" />
-                <span className="flex-1 text-left">{item.label}</span>
+                <span className="flex-1 text-left">{t(item.label)}</span>
                 {item.badge ? (
                   <span
                     className={cn(

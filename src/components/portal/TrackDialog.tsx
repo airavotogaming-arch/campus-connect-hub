@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { statusStyles, stepIndexFor, timelineSteps, type Complaint } from "./data";
+import { useT } from "./i18n";
 
 export function TrackDialog({
   complaint,
@@ -17,6 +18,7 @@ export function TrackDialog({
   onOpenChange: (open: boolean) => void;
 }) {
   const current = complaint ? stepIndexFor(complaint.status) : 0;
+  const { t } = useT();
 
   return (
     <Sheet open={!!complaint} onOpenChange={onOpenChange}>
@@ -38,10 +40,10 @@ export function TrackDialog({
                     statusStyles[complaint.status],
                   )}
                 >
-                  {complaint.status}
+                  {t(complaint.status)}
                 </span>
                 <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                  {complaint.urgency} urgency
+                  {t(complaint.urgency)} {t("Urgency").toLowerCase()}
                 </span>
               </div>
 
@@ -50,7 +52,7 @@ export function TrackDialog({
               </p>
 
               <div>
-                <p className="mb-4 text-sm font-bold text-foreground">Status timeline</p>
+                <p className="mb-4 text-sm font-bold text-foreground">{t("Status timeline")}</p>
                 <ol className="space-y-0">
                   {timelineSteps.map((step, i) => {
                     const done = i <= current && complaint.status !== "Pending";
@@ -78,7 +80,7 @@ export function TrackDialog({
                           )}
                         </div>
                         <div className={cn("pb-6", isLast && "pb-0")}>
-                          <p className="text-sm font-semibold text-foreground">{step}</p>
+                          <p className="text-sm font-semibold text-foreground">{t(step)}</p>
                           <p className="text-xs text-muted-foreground">
                             {done
                               ? "Completed"
