@@ -445,7 +445,7 @@ function AdminDashboard() {
                   <input
                     value={annTitle}
                     onChange={(e) => setAnnTitle(e.target.value)}
-                    placeholder="Title"
+                    placeholder={tr("Title")}
                     className="mt-4 w-full rounded-2xl border border-border bg-muted/40 px-4 py-2.5 text-sm outline-none focus:border-primary/50"
                   />
                   <textarea
@@ -464,7 +464,7 @@ function AdminDashboard() {
                     }}
                     className="mt-4 w-full rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-warm)]"
                   >
-                    Publish
+                    {tr("Publish")}
                   </button>
                 </div>
                 <ul className="space-y-3">
@@ -498,9 +498,9 @@ function AdminDashboard() {
                     onChange={(e) => setCategory(e.target.value)}
                     className="rounded-full border border-border bg-muted/40 px-4 py-2 text-sm font-semibold outline-none focus:border-primary/50"
                   >
-                    <option value="All">All categories</option>
+                    <option value="All">{tr("All categories")}</option>
                     {categories.map((c) => (
-                      <option key={c.name}>{c.name}</option>
+                      <option key={c.name} value={c.name}>{tr(c.name)}</option>
                     ))}
                   </select>
                   <select
@@ -508,9 +508,9 @@ function AdminDashboard() {
                     onChange={(e) => setUrgency(e.target.value)}
                     className="rounded-full border border-border bg-muted/40 px-4 py-2 text-sm font-semibold outline-none focus:border-primary/50"
                   >
-                    <option value="All">All urgency</option>
+                    <option value="All">{tr("All urgency")}</option>
                     {["Critical", "High", "Medium", "Low"].map((u) => (
-                      <option key={u}>{u}</option>
+                      <option key={u} value={u}>{tr(u)}</option>
                     ))}
                   </select>
                   <select
@@ -518,16 +518,16 @@ function AdminDashboard() {
                     onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                     className="rounded-full border border-border bg-muted/40 px-4 py-2 text-sm font-semibold outline-none focus:border-primary/50"
                   >
-                    <option value="date">Sort: newest</option>
-                    <option value="urgency">Sort: urgency</option>
-                    <option value="status">Sort: status</option>
+                    <option value="date">{tr("Sort: newest")}</option>
+                    <option value="urgency">{tr("Sort: urgency")}</option>
+                    <option value="status">{tr("Sort: status")}</option>
                   </select>
                   <button
                     onClick={exportCsv}
                     className="ml-auto inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-bold transition-colors hover:bg-accent"
                   >
                     <Download className="size-4" />
-                    Export CSV
+                    {tr("Export CSV")}
                   </button>
                 </div>
 
@@ -543,7 +543,7 @@ function AdminDashboard() {
                           : "border-border bg-muted/40 text-muted-foreground hover:bg-accent",
                       )}
                     >
-                      {s}
+                      {s === "All" ? tr("All categories").replace(/ .*/, "") === tr("All categories") ? "All" : "All" : tr(s)}
                     </button>
                   ))}
                 </div>
@@ -555,26 +555,26 @@ function AdminDashboard() {
                       onClick={() => bulkStatus("In Progress")}
                       className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold hover:bg-accent"
                     >
-                      Mark In Progress
+                      {tr("Mark In Progress")}
                     </button>
                     <button
                       onClick={() => bulkStatus("Resolved")}
                       className="rounded-full border border-border bg-card px-3 py-1.5 text-xs font-bold hover:bg-accent"
                     >
-                      Mark Resolved
+                      {tr("Mark Resolved")}
                     </button>
                     <button
                       onClick={bulkDelete}
                       className="inline-flex items-center gap-1.5 rounded-full border border-destructive/30 bg-card px-3 py-1.5 text-xs font-bold text-destructive hover:bg-destructive/10"
                     >
                       <Trash2 className="size-3.5" />
-                      Delete
+                      {tr("Delete")}
                     </button>
                     <button
                       onClick={() => setSelected([])}
                       className="ml-auto text-xs font-bold text-muted-foreground hover:text-foreground"
                     >
-                      Clear
+                      {tr("Clear")}
                     </button>
                   </div>
                 )}
@@ -593,11 +593,11 @@ function AdminDashboard() {
                             aria-label="Select all"
                           />
                         </th>
-                        <th className="px-3 pb-2">Complaint</th>
-                        <th className="px-3 pb-2">Student</th>
-                        <th className="px-3 pb-2">Urgency</th>
-                        <th className="px-3 pb-2">Assigned to</th>
-                        <th className="px-3 pb-2">Status</th>
+                        <th className="px-3 pb-2">{tr("Complaint")}</th>
+                        <th className="px-3 pb-2">{tr("Student")}</th>
+                        <th className="px-3 pb-2">{tr("Urgency")}</th>
+                        <th className="px-3 pb-2">{tr("Assigned to")}</th>
+                        <th className="px-3 pb-2">{tr("Status")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -625,7 +625,7 @@ function AdminDashboard() {
                           <td className="px-3 py-3">
                             <p className="font-semibold">{c.subject}</p>
                             <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                              {c.id} · {c.category} · {c.date}
+                              {c.id} · {tr(c.category)} · {c.date}
                               {(c.attachments?.length ?? 0) > 0 && (
                                 <span className="inline-flex items-center gap-1 rounded-full bg-primary/12 px-1.5 py-0.5 font-bold text-primary">
                                   <Paperclip className="size-3" />
@@ -642,7 +642,7 @@ function AdminDashboard() {
                                 urgencyStyles[c.urgency],
                               )}
                             >
-                              {c.urgency}
+                              {tr(c.urgency)}
                             </span>
                           </td>
                           <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
@@ -668,8 +668,8 @@ function AdminDashboard() {
                               )}
                             >
                               {statusOrder.map((s) => (
-                                <option key={s} className="bg-card text-foreground">
-                                  {s}
+                                <option key={s} value={s} className="bg-card text-foreground">
+                                  {tr(s)}
                                 </option>
                               ))}
                             </select>
@@ -679,7 +679,7 @@ function AdminDashboard() {
                       {filtered.length === 0 && (
                         <tr>
                           <td colSpan={6} className="px-3 py-10 text-center text-muted-foreground">
-                            No complaints match these filters.
+                            {tr("No complaints match these filters.")}
                           </td>
                         </tr>
                       )}
@@ -717,13 +717,13 @@ function AdminDashboard() {
 
             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-bold">
               <span className={cn("rounded-full border px-2.5 py-1", statusStyles[open.status])}>
-                {open.status}
+                {tr(open.status)}
               </span>
               <span className={cn("rounded-full border px-2.5 py-1", urgencyStyles[open.urgency])}>
-                {open.urgency}
+                {tr(open.urgency)}
               </span>
               <span className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-muted-foreground">
-                {open.category}
+                {tr(open.category)}
               </span>
             </div>
 
@@ -731,11 +731,11 @@ function AdminDashboard() {
 
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-2xl border border-border bg-muted/35 p-3">
-                <dt className="text-[11px] text-muted-foreground">Raised by</dt>
+                <dt className="text-[11px] text-muted-foreground">{tr("Raised by")}</dt>
                 <dd className="font-semibold">{open.student}</dd>
               </div>
               <div className="rounded-2xl border border-border bg-muted/35 p-3">
-                <dt className="text-[11px] text-muted-foreground">Date</dt>
+                <dt className="text-[11px] text-muted-foreground">{tr("Date")}</dt>
                 <dd className="font-semibold">{open.date}</dd>
               </div>
             </dl>
@@ -744,7 +744,7 @@ function AdminDashboard() {
               <>
                 <h3 className="mt-6 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
                   <Paperclip className="size-3.5" />
-                  Evidence ({open.attachments?.length})
+                  {tr("Evidence")} ({open.attachments?.length})
                 </h3>
                 <div className="mt-3">
                   <AttachmentGrid attachments={open.attachments ?? []} downloadable />
@@ -753,7 +753,7 @@ function AdminDashboard() {
             )}
 
             <h3 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Progress
+              {tr("Progress")}
             </h3>
             <ol className="mt-3 space-y-3">
               {timelineSteps.map((s, i) => {
@@ -772,7 +772,7 @@ function AdminDashboard() {
                         done ? "text-foreground" : "text-muted-foreground",
                       )}
                     >
-                      {s}
+                      {tr(s)}
                     </span>
                   </li>
                 );
@@ -780,7 +780,7 @@ function AdminDashboard() {
             </ol>
 
             <h3 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Update
+              {tr("Update")}
             </h3>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <select
@@ -789,7 +789,7 @@ function AdminDashboard() {
                 className="rounded-2xl border border-border bg-muted/40 px-3 py-2 text-sm font-semibold outline-none"
               >
                 {statusOrder.map((s) => (
-                  <option key={s}>{s}</option>
+                  <option key={s} value={s}>{tr(s)}</option>
                 ))}
               </select>
               <select
@@ -804,7 +804,7 @@ function AdminDashboard() {
             </div>
 
             <h3 className="mt-6 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-              Internal notes
+              {tr("Internal notes")}
             </h3>
             <ul className="mt-3 space-y-2">
               {open.notes.map((n, i) => (
@@ -816,7 +816,7 @@ function AdminDashboard() {
                 </li>
               ))}
               {open.notes.length === 0 && (
-                <li className="text-sm text-muted-foreground">No notes yet.</li>
+                <li className="text-sm text-muted-foreground">{tr("No notes yet.")}</li>
               )}
             </ul>
             <div className="mt-3 flex gap-2">
@@ -831,7 +831,7 @@ function AdminDashboard() {
                 onClick={addNote}
                 className="rounded-full bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground"
               >
-                Add
+                {tr("Add")}
               </button>
             </div>
           </aside>
