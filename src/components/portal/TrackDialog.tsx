@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { statusStyles, stepIndexFor, timelineSteps, type Complaint } from "./data";
+import { useT } from "./i18n";
 
 export function TrackDialog({
   complaint,
@@ -17,6 +18,7 @@ export function TrackDialog({
   onOpenChange: (open: boolean) => void;
 }) {
   const current = complaint ? stepIndexFor(complaint.status) : 0;
+  const { t } = useT();
 
   return (
     <Sheet open={!!complaint} onOpenChange={onOpenChange}>

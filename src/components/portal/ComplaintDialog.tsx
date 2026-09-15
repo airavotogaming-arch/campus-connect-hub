@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories, type Attachment } from "./data";
+import { useT } from "./i18n";
 import { AttachmentGrid } from "./AttachmentPreview";
 
 export type { Attachment };
@@ -56,6 +57,7 @@ export function ComplaintDialog({
   const [anonymous, setAnonymous] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [touched, setTouched] = useState(false);
+  const { t } = useT();
 
   useEffect(() => {
     if (open) setCategory(presetCategory ?? "");
@@ -125,15 +127,15 @@ export function ComplaintDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="font-display text-xl">Submit a new complaint</DialogTitle>
+          <DialogTitle className="font-display text-xl">{t("Submit a new complaint")}</DialogTitle>
           <DialogDescription>
-            Share the details so the administration can act quickly.
+            {t("Share the details so the administration can act quickly.")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="subject">Title</Label>
+            <Label htmlFor="subject">{t("Title")}</Label>
             <Input
               id="subject"
               value={subject}
@@ -147,15 +149,15 @@ export function ComplaintDialog({
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label>Category</Label>
+              <Label>{t("Category")}</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose category" />
+                  <SelectValue placeholder={t("Choose category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((c) => (
                     <SelectItem key={c.name} value={c.name}>
-                      {c.name}
+                      {t(c.name)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -165,7 +167,7 @@ export function ComplaintDialog({
               )}
             </div>
             <div className="space-y-2">
-              <Label>Urgency</Label>
+              <Label>{t("Urgency")}</Label>
               <Select value={urgency} onValueChange={setUrgency}>
                 <SelectTrigger>
                   <SelectValue />
@@ -173,7 +175,7 @@ export function ComplaintDialog({
                 <SelectContent>
                   {urgencies.map((u) => (
                     <SelectItem key={u} value={u}>
-                      {u}
+                      {t(u)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -182,7 +184,7 @@ export function ComplaintDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{t("Description")}</Label>
             <Textarea
               id="description"
               rows={5}
@@ -196,7 +198,7 @@ export function ComplaintDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="attachment">Attachments</Label>
+            <Label htmlFor="attachment">{t("Attachments")}</Label>
             <label
               htmlFor="attachment"
               className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-input bg-muted/50 px-4 py-3 text-sm text-muted-foreground hover:border-primary/50"
@@ -221,9 +223,9 @@ export function ComplaintDialog({
 
           <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3">
             <span>
-              <span className="block text-sm font-semibold">Submit anonymously</span>
+              <span className="block text-sm font-semibold">{t("Submit anonymously")}</span>
               <span className="block text-xs text-muted-foreground">
-                Your name will be hidden from staff
+                {t("Your name will be hidden from staff")}
               </span>
             </span>
             <Switch checked={anonymous} onCheckedChange={setAnonymous} />
@@ -232,9 +234,9 @@ export function ComplaintDialog({
 
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t("Cancel")}
           </Button>
-          <Button onClick={handleSubmit}>Submit complaint</Button>
+          <Button onClick={handleSubmit}>{t("Submit complaint")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
