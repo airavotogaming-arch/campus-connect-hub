@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
 const THEME_KEY = "campus-theme";
-const LANG_KEY = "campus-language";
 
 export type Theme = "light" | "dark";
 
