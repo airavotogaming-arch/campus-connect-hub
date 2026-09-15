@@ -39,9 +39,7 @@ export function PortalSidebar({
             <GraduationCap className="size-5" />
           </span>
           <span className="font-display text-[15px] font-extrabold leading-tight text-sidebar-foreground">
-            {t("Student")}
-            <br />
-            {t("Complaint")} {t("Portal" as never) === "Portal" ? "Portal" : t("Portal" as never)}
+            {t("Student Complaint Portal")}
           </span>
         </div>
 
@@ -60,7 +58,7 @@ export function PortalSidebar({
                 )}
               >
                 <item.icon className="size-[18px]" />
-                <span className="flex-1 text-left">{item.label}</span>
+                <span className="flex-1 text-left">{t(item.label)}</span>
                 {item.badge ? (
                   <span
                     className={cn(
