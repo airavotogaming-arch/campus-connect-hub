@@ -24,6 +24,7 @@ import {
 import { notifications } from "./data";
 import { useProfile } from "./profile";
 import { languages, useLanguage, useTheme } from "./prefs";
+import { useT } from "./i18n";
 
 export function TopBar({
   query,
@@ -36,6 +37,7 @@ export function TopBar({
   const { theme, toggle } = useTheme();
   const { lang, current, change } = useLanguage();
   const navigate = useNavigate();
+  const { t } = useT();
   return (
     <header className="sticky top-0 z-20 flex items-center gap-4 border-b border-border bg-background/85 px-4 py-3 backdrop-blur md:px-8">
       <label className="relative flex h-11 flex-1 items-center rounded-xl border border-border bg-card px-4 md:max-w-xl">
@@ -43,7 +45,7 @@ export function TopBar({
         <input
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="Search complaints, keywords..."
+          placeholder={t("Search complaints, keywords...")}
           className="h-full flex-1 bg-transparent px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
         />
         <span className="hidden rounded-md border border-border bg-muted px-2 py-1 text-[11px] font-semibold text-muted-foreground sm:block">
@@ -70,7 +72,7 @@ export function TopBar({
             <span className="hidden text-sm font-semibold uppercase sm:block">{current.code}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuLabel>Language</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("Language")}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {languages.map((l) => (
               <DropdownMenuItem key={l.code} onClick={() => change(l.code)}>
@@ -90,7 +92,7 @@ export function TopBar({
             <span className="absolute right-2.5 top-2.5 size-2 rounded-full bg-primary ring-2 ring-card" />
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80 p-0">
-            <p className="border-b border-border px-4 py-3 text-sm font-bold">Notifications</p>
+            <p className="border-b border-border px-4 py-3 text-sm font-bold">{t("Notifications")}</p>
             <ul className="divide-y divide-border">
               {notifications.map((n) => (
                 <li key={n.title} className="px-4 py-3">
@@ -123,20 +125,20 @@ export function TopBar({
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate({ to: "/profile" })}>
               <User className="mr-2 size-4" />
-              Profile
+              {t("Profile")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate({ to: "/settings" })}>
               <Settings className="mr-2 size-4" />
-              Settings
+              {t("Settings")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate({ to: "/student" })}>
               <HelpCircle className="mr-2 size-4" />
-              Help & Support
+              {t("Help & Support")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate({ to: "/" })} className="text-destructive focus:text-destructive focus:bg-destructive/10">
               <LogOut className="mr-2 size-4" />
-              Log out
+              {t("Log out")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
